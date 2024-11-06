@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -14,11 +18,12 @@ default_args = {
 
 # Define the DAG
 with DAG(
-    dag_id='reddit_data_fetch_dataengineering',
+    dag_id='reddit_data_fetch',
     default_args=default_args,
     description='This DAG pulls data from reddit to GCP',
     schedule_interval='@daily',
-    start_date=datetime(2024, 10, 1)
+    start_date=datetime(2024, 10, 1),
+    catchup=False
 ) as dag:
 
     # Define Task 1: Fetch Data from reddit to GCS

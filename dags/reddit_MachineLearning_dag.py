@@ -20,7 +20,8 @@ with DAG(
     default_args=default_args,
     description='This DAG pulls data from reddit to GCP',
     schedule_interval='0 8 * * *',
-    start_date=datetime(2024, 10, 1)
+    start_date=datetime(2024, 10, 1),
+    catchup=False
 ) as dag:
 
     # Define Task 1: Fetch Data from reddit to GCS

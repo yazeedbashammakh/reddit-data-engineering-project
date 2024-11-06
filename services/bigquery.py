@@ -1,13 +1,17 @@
 from google.cloud import bigquery
 from google.oauth2 import service_account
+
+from utils.config import Config
 from utils.logging import get_logger
 
 
 logger = get_logger(__name__)
 
+CREDENTIALS_PATH = Config.SERVICE_ACCOUNT_CREDS
+
 class BigQueryService:
 
-    def __init__(self, project_id: str=None,  credentials_path: str=None):
+    def __init__(self, project_id: str=None,  credentials_path: str=CREDENTIALS_PATH):
         """
         Initialize the BigQuery Service with the necessary credentials and project ID.
         """

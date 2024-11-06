@@ -2,12 +2,14 @@ import json
 from google.cloud import storage
 from google.oauth2 import service_account
 from utils.logging import get_logger
-
+from utils.config import Config
 
 logger = get_logger(__name__)
 
+CREDENTIALS_PATH = Config.SERVICE_ACCOUNT_CREDS
+
 class GCSService:
-    def __init__(self, bucket_name: str, credentials_path: str=None):
+    def __init__(self, bucket_name: str, credentials_path: str=CREDENTIALS_PATH):
         """
         Initialize the GCS Service with the necessary credentials and bucket name.
         """

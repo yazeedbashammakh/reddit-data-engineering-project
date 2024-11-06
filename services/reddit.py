@@ -13,7 +13,7 @@ class RedditService:
 
     def __init__(self):
         try:
-                
+            print(Config.CLIENT_ID)
             self.reddit = Reddit(
                 client_id=Config.CLIENT_ID,
                 client_secret=Config.CLIENT_SECRET,
@@ -30,7 +30,7 @@ class RedditService:
         return subreddit
 
 
-    def fetch_raw_posts(self, subreddit, start_date=None, end_date=datetime.now(timezone.utc), limit=2000):
+    def fetch_raw_posts(self, subreddit, start_date=None, end_date=datetime.now(timezone.utc), limit=1000):
         """
         Fetch posts from a subreddit.
         Args:

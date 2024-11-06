@@ -4,7 +4,9 @@ import json
 from utils.config import Config
 from services.reddit import RedditService
 from services.gcs import GCSService
+from utils.logging import get_logger
 
+log = get_logger(__name__)
 
 def fetch_subreddit_to_gcs(subreddit_name: str):
     """
@@ -31,7 +33,7 @@ def fetch_subreddit_to_gcs(subreddit_name: str):
     comments = parse_comment_details(reddit_service, raw_posts)
     print(f"Total comments found: {len(comments)}")
 
-    # Move the data to GCS
+    
     gcs_path = f"{Config.GCS_FOLDER}/{subreddit_name}/{end_date_str}"
     subreddit_file_path = f"{gcs_path}/subreddit.json"
     posts_file_path = f"{gcs_path}/posts.json"
@@ -47,21 +49,6 @@ def fetch_subreddit_to_gcs(subreddit_name: str):
     gcs_service.upload_file("subreddit.json", subreddit_file_path)
     gcs_service.upload_file("posts.json", posts_file_path)
     gcs_service.upload_file("comments.json", comments_file_path)
-
-    # file_path = "subreddit.json"
-    # # Write JSON data to the file
-    # with open(file_path, "w") as json_file:
-    #     json.dump(subreddit_details, json_file, indent=4) 
-
-    # file_path = "posts.json"
-    # # Write JSON data to the file
-    # with open(file_path, "w") as json_file:
-    #     json.dump(posts, json_file, indent=4) 
-
-    # file_path = "comments.json"
-    # # Write JSON data to the file
-    # with open(file_path, "w") as json_file:
-    #     json.dump(comments, json_file, indent=4) 
 
     return gcs_path
 
@@ -86,11 +73,14 @@ def parse_post_details(raw_posts: list):
     ]
     post_data = []
     for post in raw_posts:
-        post_dict = vars(post)
-        post_record = {key: post_dict[key] for key in post_keys} 
-        post_record["author_id"] = post_dict["author_fullname"]
-        post_data.append(post_record)
-
+        try:
+            post_dict = vars(post)
+            post_record = {key: post_dict[key] for key in post_keys} 
+            post_record["author_id"] = post_dict["author_fullname"]
+            post_data.append(post_record)
+        except Exception as e:
+            log.error(vars(post))
+            log.error(e)
     return post_data
 
     # # Create a DataFrame

@@ -4,8 +4,7 @@ from utils.config import Config
 
 
 def load_to_bq_staging(data_name:str, **kwargs):
-    # gcs_path = kwargs['ti'].xcom_pull(task_ids='fetch_data_task')
-    gcs_path = "reddit-data/dataengineering/20241028T06:59:28"
+    gcs_path = kwargs['ti'].xcom_pull(task_ids='fetch_data_task')
 
     gcs_uri = f"gs://{Config.BUCKET}/{gcs_path}/{data_name}.json"
     dataset_id = Config.STAGE_DATASET_ID
@@ -16,8 +15,8 @@ def load_to_bq_staging(data_name:str, **kwargs):
 
 
 def load_to_bq_subreddit_final():
-    source_table = f"{Config.GCP_PROJECT}.{Config.STAGE_DATASET_ID}.{Config.TABLES["subreddit"]}"
-    target_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES["subreddit"]}"
+    source_table = f"{Config.GCP_PROJECT}.{Config.STAGE_DATASET_ID}.{Config.TABLES['subreddit']}"
+    target_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES['subreddit']}"
     query = f"""
         MERGE INTO `{target_table}` as T
         USING `{source_table}` as S 
@@ -46,8 +45,8 @@ def load_to_bq_subreddit_final():
 
 
 def load_to_bq_posts_final():
-    source_table = f"{Config.GCP_PROJECT}.{Config.STAGE_DATASET_ID}.{Config.TABLES["posts"]}"
-    target_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES["posts"]}"
+    source_table = f"{Config.GCP_PROJECT}.{Config.STAGE_DATASET_ID}.{Config.TABLES['posts']}"
+    target_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES['posts']}"
     query = f"""
         MERGE INTO `{target_table}` as T
         USING `{source_table}` as S 
@@ -111,8 +110,8 @@ def load_to_bq_posts_final():
 
 
 def load_to_bq_comments_final():
-    source_table = f"{Config.GCP_PROJECT}.{Config.STAGE_DATASET_ID}.{Config.TABLES["comments"]}"
-    target_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES["comments"]}"
+    source_table = f"{Config.GCP_PROJECT}.{Config.STAGE_DATASET_ID}.{Config.TABLES['comments']}"
+    target_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES['comments']}"
     query = f"""
         MERGE INTO `{target_table}` as T
         USING `{source_table}` as S 
@@ -167,9 +166,9 @@ def load_to_bq_comments_final():
 
 
 def last_month_aggregated_metrics():
-    agg_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES["last_month_agg"]}"
-    post_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES["posts"]}"
-    comment_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES["comments"]}"
+    agg_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES['last_month_agg']}"
+    post_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES['posts']}"
+    comment_table = f"{Config.GCP_PROJECT}.{Config.FINAL_DATASET_ID}.{Config.TABLES['comments']}"
     query = f"""
     CREATE OR REPLACE TABLE `{agg_table}` 
         AS 

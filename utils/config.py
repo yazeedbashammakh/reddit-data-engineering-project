@@ -13,9 +13,11 @@ class Config:
     STAGE_DATASET_ID = os.getenv("STAGE_DATASET_ID")
     FINAL_DATASET_ID = os.getenv("FINAL_DATASET_ID")
     GCP_PROJECT = os.getenv("GCP_PROJECT")
+    SERVICE_ACCOUNT_CREDS = os.getenv("SERVICE_ACCOUNT")
 
     TABLES = {
         "subreddit": "subreddits",
         "posts": "subreddit_posts",
-        "comments": "subreddit_comments"
+        "comments": "subreddit_comments",
+        "last_month_agg": "last_month_aggregated_metrices"
     }
