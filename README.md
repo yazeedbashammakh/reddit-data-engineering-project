@@ -48,16 +48,16 @@ The sum of upvotes and downvotes on a post or comment determines its karma, and 
 
 - Influence is being measured in terms of engagement. There can be 2 kinds of engagement metrics.
 1. Quantity:
-    Frequency score is the sum of:
-        - Post Frequency: Number of posts in one week
-        - Comment Frequency: Number of comments in one week
+Frequency score is the sum of:
+- Post Frequency: Number of posts in one week
+- Comment Frequency: Number of comments in one week
 
-2. Quality:
-    Engagement score is the sum of:
-        - Average Post Karma
-        - Average Comment Karma
-        - Average Comments Per Post
-        - Total Awards
+3. Quality:
+Engagement score is the sum of:
+- Average Post Karma
+- Average Comment Karma
+- Average Comments Per Post
+- Total Awards
 
 Final influence score can be measured as frequency score + engagement score. 
 
